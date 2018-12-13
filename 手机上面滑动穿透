@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #f40;
+        }
+        
+        p{
+            margin: 40px;
+        }
+        #mask{
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.4);
+            display: none;
+        }
+        #fixed{
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 300px;
+            overflow: auto;
+            background: #fcf;
+            margin: 0;
+            display: none;
+            -webkit-overflow-scrolling: touch;
+            
+        }
+        li{
+            margin: 20px;
+        }
+        #btn{
+            position: fixed;
+            left: 200px;
+            top: 200px;
+            background-color: #ccc;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+    <p>测试滚动demo1</p>
+    <p>测试滚动demo2</p>
+    <p>测试滚动demo3</p>
+    <p>测试滚动demo4</p>
+    <p>测试滚动demo5</p>
+    <p>测试滚动demo6</p>
+    <p>测试滚动demo7</p>
+    <p>测试滚动demo8</p>
+    <p>测试滚动demo9</p>
+    <p>测试滚动demo10</p>
+    <p>测试滚动demo11</p>
+    <p>测试滚动demo12</p>
+    <p>测试滚动demo13</p>
+    <p>测试滚动demo</p>
+    <p>测试滚动demo</p>
+    <p>测试滚动demo</p>
+    <p>测试滚动demo</p>
+    <p>测试滚动demo</p>
+    <p>测试滚动demo</p>
+    <button id="btn">打开弹窗</button>
+    <div id="mask">
+        <ul id="fixed">
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+            <li>弹窗滚动区域</li>
+        </ul>
+    </div>
+    <script>
+        initEvent()
+        function initEvent() {
+            let btn = document.querySelector('#btn')
+            let pop = document.querySelector('#fixed')
+            let mask = document.querySelector('#mask')
+            let body = document.body
+            let isShow = false
+            let startY
+            btn.addEventListener('click', () => {
+                isShow = !isShow
+                pop.style.display = `${isShow ? 'block' : 'none'}`
+                btn.innerText = isShow ? '关闭弹窗' : '打开弹窗'
+                mask.style.display = `${isShow ? 'block' : 'none'}`
+            }, false)
+            let scrollHeight = pop.scrollHeight
+            pop.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY
+            })
+            pop.addEventListener('touchmove', (e) => {
+                let disY = startY - e.touches[0].clientY
+                scrollHeight = pop.scrollHeight
+                let scrollTop = pop.scrollTop
+                if (disY < 0) { // 下滑
+                    if (scrollTop <= 0) {
+                        return e.preventDefault()
+                    }
+                } else {
+                    if (scrollTop >= scrollHeight - pop.clientHeight) {
+                        return e.preventDefault()
+                    }
+                }
+            }, false)
+            mask.addEventListener('touchmove', (e) => {
+                if (e.target.id === 'mask') {
+                    e.preventDefault()
+                }
+            }, true)
+        }
+    </script>
+</body>
+
+</html>
